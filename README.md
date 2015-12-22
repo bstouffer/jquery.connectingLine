@@ -35,6 +35,7 @@ status - accepted, rejected, modified, (none) - Optional
 style - (dashed), solid, dotted - Optional	
 horizantal_gap - (0), Horizantal Gap from original point
 error - show, (hide) - To show error or not
+align - center, sides (default) - Aligns the connection point to the center of the node, or the left and right sides
 
 <script type="text/javascript">
 		mySVG.drawLine({

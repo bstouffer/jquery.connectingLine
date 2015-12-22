@@ -8,7 +8,7 @@
 
 		var _canvas;
 		var _ctx;
-		var _lines = new Array(); //This array will store all lines (option)
+		var _lines = []; //This array will store all lines (option)
 		var _me = this;
 		var _parent = param || document;
 
@@ -32,7 +32,7 @@
 
 			if (option.left_selector != '' && typeof option.left_selector !== 'undefined' && $(option.left_selector).length > 0) {
 				$(option.left_selector).each(function(index) {
-					var option2 = new Object();
+					var option2 = {};
 					$.extend(option2, option);
 					option2.left_node = $(this).attr('id');
 					option2.right_node = $(this).data(option.data_attribute);
@@ -51,8 +51,8 @@
 			try {
 				var _color;
 				var _dash;
-				var _left = new Object(); //This will store _left elements offset  
-				var _right = new Object(); //This will store _right elements offset	
+				var _left = {}; //This will store _left elements offset  
+				var _right = {}; //This will store _right elements offset
 				var _error = (option.error == 'show') || false;
 				/*
 				option = {
@@ -115,16 +115,23 @@
 						_left_node = $(option.left_node);
 						_right_node = $(value);
 						if (_left_node.offset().left >= _right_node.offset().left) {
-							_tmp = _left_node
-							_left_node = _right_node
+							_tmp = _left_node;
+							_left_node = _right_node;
 							_right_node = _tmp;
 						}
 
 						//Get Left point and Right Point
-						_left.x = _left_node.offset().left + _left_node.outerWidth();
-						_left.y = _left_node.offset().top + (_left_node.outerHeight() / 2);
-						_right.x = _right_node.offset().left;
-						_right.y = _right_node.offset().top + (_right_node.outerHeight() / 2);
+                        if (option.align == "center") {
+                            _left.x = _left_node.offset().left + (_left_node.outerWidth() / 2);
+                            _left.y = _left_node.offset().top + (_left_node.outerHeight() / 2);
+                            _right.x = _right_node.offset().left + (_right_node.outerWidth() / 2);
+                            _right.y = _right_node.offset().top + (_right_node.outerHeight() / 2);
+                        } else {
+                            _left.x = _left_node.offset().left + _left_node.outerWidth();
+                            _left.y = _left_node.offset().top + (_left_node.outerHeight() / 2);
+                            _right.x = _right_node.offset().left;
+                            _right.y = _right_node.offset().top + (_right_node.outerHeight() / 2);
+                        }
 
 						//Create a group
 						//var g = _canvas.group({strokeWidth: 2, strokeDashArray:_dash}); 	
