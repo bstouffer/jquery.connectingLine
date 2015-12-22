@@ -33,9 +33,10 @@ left_node - Left Element by ID - Mandatory
 right_node - Right Element ID - Mandatory
 status - accepted, rejected, modified, (none) - Optional
 style - (dashed), solid, dotted - Optional	
-horizantal_gap - (0), Horizantal Gap from original point
+horizontal_gap - (0), Horizontal Gap from original point
+vertical_gap - (0), Vertical Gap from original point
 error - show, (hide) - To show error or not
-align - center, sides (default) - Aligns the connection point to the center of the node, or the left and right sides
+align - center, vertical, (horizontal) - Aligns the connection point to the center of the node, or the left and right sides
 
 <script type="text/javascript">
 		mySVG.drawLine({

@@ -60,7 +60,7 @@
 					right_node - Right Element ID - Mandatory
 					status - accepted, rejected, modified, (none) - Optional
 					style - (dashed), solid, dotted - Optional	
-					horizantal_gap - (0), Horizantal Gap from original point
+					horizontal_gap - (0), Horizantal Gap from original point
 					error - show, (hide) - To show error or not
 					width - (2) - Width of the line
 				}
@@ -121,11 +121,16 @@
 						}
 
 						//Get Left point and Right Point
-                        if (option.align == "center") {
+                        if (option.align === "center") {
                             _left.x = _left_node.offset().left + (_left_node.outerWidth() / 2);
                             _left.y = _left_node.offset().top + (_left_node.outerHeight() / 2);
                             _right.x = _right_node.offset().left + (_right_node.outerWidth() / 2);
                             _right.y = _right_node.offset().top + (_right_node.outerHeight() / 2);
+                        } else if (option.align === "vertical") {
+                            _left.x = _left_node.offset().left + (_left_node.outerWidth() / 2);
+                            _left.y = _left_node.offset().top + _left_node.outerHeight();
+                            _right.x = _right_node.offset().left + (_right_node.outerWidth() / 2);
+                            _right.y = _right_node.offset().top;
                         } else {
                             _left.x = _left_node.offset().left + _left_node.outerWidth();
                             _left.y = _left_node.offset().top + (_left_node.outerHeight() / 2);
@@ -137,14 +142,24 @@
 						//var g = _canvas.group({strokeWidth: 2, strokeDashArray:_dash}); 	
 
 						//Draw Line
-						var _gap = option.horizantal_gap || 0;
+						var _gap = 0;
 
+                        if (option.align === "vertical") {
+                            _gap = option.vertical_gap || 0;
+                            _ctx.moveTo(_left.x, _left.y);
+                            if (_gap != 0) {
+                                _ctx.lineTo(_left.x, _left.y + _gap);
+                                _ctx.lineTo(_right.x, _right.y - _gap);
+                            }
+                        } else {
+                            _gap = option.horizontal_gap || 0;
+                            _ctx.moveTo(_left.x, _left.y);
+                            if (_gap != 0) {
+                                _ctx.lineTo(_left.x + _gap, _left.y);
+                                _ctx.lineTo(_right.x - _gap, _right.y);
+                            }
+                        }
 
-						_ctx.moveTo(_left.x, _left.y);
-						if (_gap != 0) {
-							_ctx.lineTo(_left.x + _gap, _left.y);
-							_ctx.lineTo(_right.x - _gap, _right.y);
-						}
 						_ctx.lineTo(_right.x, _right.y);
 
 						if (!_ctx.setLineDash) {
