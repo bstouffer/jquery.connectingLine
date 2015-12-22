@@ -144,7 +144,7 @@
 						//Draw Line
 						var _gap = 0;
 
-                        if (option.align === "vertical") {
+                        if (option.align === "vertical" || option.align === "center") {
                             _gap = option.vertical_gap || 0;
                             _ctx.moveTo(_left.x, _left.y);
                             if (_gap != 0) {
