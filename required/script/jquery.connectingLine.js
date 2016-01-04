@@ -18,6 +18,24 @@
 			.attr('height', $(_parent).height());
 		$('body').append(_canvas);
 
+		this.removeLine = function(option) {
+			var linesToRemove = [];
+			for (var line in _lines) {
+				if (_lines[line].left_node === option ||
+					_lines[line].right_node === option) {
+					linesToRemove.push(_lines[line]);
+				}
+			}
+
+			for (var remLine in linesToRemove) {
+				var index = _lines.indexOf(linesToRemove[remLine]);
+				if (index > -1) {
+					_lines.splice(index, 1);
+				}
+			}
+			_me.redrawLines();
+		};
+
 		this.drawLine = function(option) {
 			//It will push line to array.
 			_lines.push(option);
@@ -186,7 +204,10 @@
 			_me.redrawLines();
 		});
 		this.redrawLines = function() {
-			_ctx.clearRect(0, 0, $(_parent).width(), $(_parent).height());
+			if (typeof _ctx !== "undefined") {
+				_ctx.clearRect(0, 0, $(_parent).width(), $(_parent).height());
+			}
+
 			_lines.forEach(function(entry) {
 				entry.resize = true;
 				_me.connect(entry);
